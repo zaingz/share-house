@@ -1,0 +1,92 @@
+<!-- <h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %> -->
+
+
+<div class="container parallex">
+      <div class="row flipeffect" style="margin-top:75px;">
+      <div class="col-md-6 col-md-offset-3 ">
+        <div class="panel panel-login signup-form-body">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6 col-xs-offset-3">
+                <a href="#" class="active" id="register-form-link">Register</a>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="panel-body ">
+            <div class="row">
+              <div class="col-lg-12">
+                <%= form_for(resource, as: resource_name, url: registration_path(resource_name) ,:html => {:id => "register-form"}, :class=>"form-signin") do |f| %> 
+                <%= devise_error_messages! %>
+                  <div class="form-group">
+                    <%= f.text_field :first_name, placeholder: 'First Name',:class=>"form-control", autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :last_name,placeholder: 'Last Name', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.email_field :email,placeholder: 'Email',:class=>"form-control", autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <% if @minimum_password_length %>
+                    <em>(<%= @minimum_password_length %> characters minimum)</em>
+                    <% end %><br />
+                    <%= f.password_field :password,placeholder:'Password',:class=>"form-control", autocomplete: "off" %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.password_field :password_confirmation, placeholder:'Confirm Password',:class=>"form-control" ,autocomplete: "off" %>
+                  </div>
+                  
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3 actions">
+                        <%= f.submit "Sign up",:class=>"btn btn-lg btn-primary btn-block" %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="text-center">
+                          <%= render "devise/shared/links" %>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

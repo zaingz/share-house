@@ -1,0 +1,66 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "home";
+@import "signuplogin";
+
+@import "alertify";
+@import "alertify.default";
+
+@import "alertify.bootstrap";
+
+@import "alertify.core";
+
+
+#simple-bar{
+			background-color: #333;
+			margin-top: -21px;
+		}
+#login-button{
+	margin-top: 9px;
+}
+#logout-button{
+	margin-top: 9px;
+}
+
+#simple-bar{
+	ul{
+		.active{
+			
+			a{color: white;
+				border-radius: 4px;
+				background-color: #337ab7 !important;
+			}
+		}
+		
+	}
+}
+
+
+/*.full{width: 100%;background-color: #CCC;margin-top: -21px}
+#sec-nav{
+	
+	padding-top: 10px;
+	ul{display: inline-flex;
+		margin:0;
+		padding: 0;
+		li{	
+			
+			text-decoration: none;
+			margin-right: 40px;
+			margin-bottom: 10px;
+			list-style-type: none;
+				a{padding: 10px 10px; }
+		}
+		.active{
+			border-radius: 4px;
+			background-color: #337ab7;
+			a{color: white;}
+		}
+	}
+	.button-post{
+		border-bottom-width: 0px;
+	    padding-top: 3px;
+	    padding-bottom: 3px;
+	    margin-bottom: 7px;
+	}
+}*/

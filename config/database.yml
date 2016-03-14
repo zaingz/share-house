@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: share_house
+  database: share_house_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,5 +81,12 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
-  database: share_house
+  adapter: postgresql
+  encoding: unicode
+  username: wrmpaihupuumsc
+  password: PGthQYn0gF2T2LP-kuV6CUe2Xy
+  hostname: ec2-54-83-0-187.compute-1.amazonaws.com
+  pool: 5
+  port: 5432
+  url: postgres://wrmpaihupuumsc:PGthQYn0gF2T2LP-kuV6CUe2Xy@ec2-54-83-0-187.compute-1.amazonaws.com:5432/dc0k9s0tr08m80
+  database: dc0k9s0tr08m80

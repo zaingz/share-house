@@ -1,2 +1,19 @@
 
-<h1>Welcome<h1>
+ <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>Rate</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for home in @homes %>
+      <tr>
+        <td><%= home.address %></td>
+        <td><%= home.rate %></td>
+        <td><%= home.description %></td>
+      </tr>
+      <% end %>
+    </tbody>
+ </table>

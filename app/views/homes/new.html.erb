@@ -1,0 +1,125 @@
+<div class="container">
+      <div class="row flipeffect" style="margin-top:55px;">
+      <div class="col-md-6 col-md-offset-3 ">
+        <div class="panel panel-login signup-form-body">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-6 col-xs-offset-3">
+                <a href="#" class="active" id="forgot-password-link">Post a house</a>
+              </div>
+            </div>
+            <hr>
+          </div>
+          <div class="panel-body ">
+            <div class="row">
+              <div class="col-lg-12">
+
+                <%= form_for(@homes) do |f| %> 
+                  <div class="form-group">
+                    <%= f.text_field :name,placeholder: 'Name', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :address,placeholder: 'Address', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :host,placeholder: 'Host', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :contact,placeholder: 'Contact', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :email,placeholder: 'Email', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :website,placeholder: 'Website', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :description,placeholder: 'Description', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :rate,placeholder: 'Rate', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <fieldset class="form-control">
+                      <%= label(:wifi, "Wifi: ") %>
+                      <%= f.radio_button(:wifi, "shared") %>
+                      <%= label(:wifi_shared, "Shared") %>
+                      <%= f.radio_button(:wifi, "inclusive") %>
+                      <%= label(:wifi_inclusive, "inclusive") %>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <fieldset class="form-control">
+                      <%= label(:laundry, "Laundry: ") %>
+                      <%= f.radio_button(:laundry, "True") %>
+                      <%= label(:laundry_true, "Yes") %>
+                      <%= f.radio_button(:laundry, "False") %>
+                      <%= label(:laundry_false, "No") %>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <fieldset class="form-control">
+                      <%= label(:power, "Power: ") %>
+                      <%= f.radio_button(:power, "shared") %>
+                      <%= label(:power_true, "Shared") %>
+                      <%= f.radio_button(:power, "inclusive") %>
+                      <%= label(:power_inclusive, "Inclusive") %>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :bathroom,placeholder: 'Bathroom', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :toilet,placeholder: 'Toilet', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <fieldset class="form-control">
+                      <%= label(:heating, "Heating: ") %>
+                      <%= f.radio_button(:heating, "True") %>
+                      <%= label(:heating_true, "Yes") %>
+                      <%= f.radio_button(:heating, "False") %>
+                      <%= label(:heating_false, "No") %>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                  <fieldset class="form-control">
+                    <%= label(:bed, "Bed: ") %>
+                    <%= f.select(:bed, options_for_select([['Single', "single"], ['Double', "double"] , ['Dorm', "dorm"] , ['Mixed-Dorm', "mixed-dorm"]], 1)) %>
+                  </fieldset>
+                  </div>
+                  <fieldset class="form-group">
+                    <%= f.text_field :min_stay ,placeholder: 'Min stay(days)', :class=>"form-control",autofocus: true %>
+                  </fieldset>
+                  <div class="form-group">
+                  <fieldset class="form-control">
+                    <%= label(:pets, "Pets: ") %>
+                    <%= f.radio_button(:pets, "True") %>
+                    <%= label(:pets_true, "Yes") %>
+                    <%= f.radio_button(:pets, "False") %>
+                    <%= label(:pets_false, "No") %>
+                  </fieldset>
+                  </div>
+                  <div class="form-group">
+                  <fieldset class="form-control">
+                    <%= label(:bond, "Bond: ") %>
+                    <%= f.radio_button(:bond, "True") %>
+                    <%= label(:bond_true, "Yes") %>
+                    <%= f.radio_button(:bond, "False") %>
+                    <%= label(:bond_false, "No") %>
+                  </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3 actions">
+                        <%= f.submit "Create",:class=>"btn btn-lg btn-primary btn-block" %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

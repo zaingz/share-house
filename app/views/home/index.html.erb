@@ -5,7 +5,7 @@
     padding: 0;
   }
   #map {
-    height: 100%;
+    height: 83%;
   }
   .controls {
     background-color: #fff;
@@ -29,7 +29,7 @@
     border-color: #4d90fe;
   }
 </style>
-    <div id="map"></div>
+    <!-- <div id="map"></div> -->
 
     <script>
       // This sample uses the Place Autocomplete widget to allow the user to search
@@ -43,10 +43,12 @@
 
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
-          zoom: 13
+          center: {lat:   -40.900557, lng: 174.885971},
+          zoom: 6
         });
-var infoWindow = new google.maps.InfoWindow({map: map});
+
+//current location        
+/*var infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -65,7 +67,7 @@ var infoWindow = new google.maps.InfoWindow({map: map});
         } else {
           // Browser doesn't support Geolocation
           handleLocationError(false, infoWindow, map.getCenter());
-        }
+        }*/
       
 
       function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -115,7 +117,47 @@ var infoWindow = new google.maps.InfoWindow({map: map});
               place.formatted_address);
           infowindow.open(map, marker);
         });
+
+
+      /*set_marker();
+      function set_marker(){
+          alert("dfs");
+          for(var i = 1; i < <%= @homes.size %> ; i++)
+          {
+            var res = <%=(@homes.to_json)%>;  
+            console.log(res);
+              var position = new google.maps.LatLng(res.lat ,  res.long );
+              
+                    marker1 = new google.maps.Marker({
+                      map: map,
+                      position: position,
+                title:'Account Name: ' +  res.name 
+                });   
+              infowindow = new google.maps.InfoWindow({
+                content:   res.description 
+                });
+              
+                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                    return function() {
+                      var markerid = marker1.alt;
+                  var res1 = markerid.split("|");
+                      var cs =    "asd"              
+                  infowindow.setContent(cs);
+                  //infowindow.setContent(cs);
+                  
+                      infowindow.open(map, marker1);
+                  }
+                })(marker1, i));   
+              
+
+            markers.push(marker1);
+          }
+          var mc = new MarkerClusterer(map,markers);
+            }*/
       }
+
+          
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoUyblkGqwp2lFuWQb0v_-J_mI5sYJYPc&libraries=places&callback=initMap"
         async defer></script>

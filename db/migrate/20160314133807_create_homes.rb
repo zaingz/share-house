@@ -16,7 +16,7 @@ class CreateHomes < ActiveRecord::Migration
     	t.string :toilet, default: ""
     	t.boolean :heating, default: false
     	t.string :bed, default: ""
-    	t.string :min_stay, default: ""
+    	t.integer :min_stay, default: ""
     	t.boolean :pets, default: false
     	t.boolean :bond, default: false
 

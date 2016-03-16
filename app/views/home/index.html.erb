@@ -53,6 +53,64 @@
         });
 
       $(document).ready(function(){
+
+
+
+
+
+
+
+ $.ajax({
+              type: "GET",
+              url: "near_homes/?locat="+input,
+              success: function(data){
+                console.log("Worked");
+                data = JSON.parse(JSON.stringify(data));
+                console.log(data);
+                for(i=0 ; i<data.length;i++){
+                  console.log(data[i]);
+                  position = new google.maps.LatLng(data[i].lat,data[i].long);
+                  //img_sel = new google.maps.MarkerImage('images/p.png');
+                  marker1 = new google.maps.Marker({
+                    position: position,
+                    map: map
+
+                  });
+                  infowindow = new google.maps.InfoWindow();
+/*                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                    return function() {
+                        var markerid = marker1.alt;
+                        var res1 = markerid.split(",");
+                        var cs = 'Home';
+                        infowindow.setContent(cs);
+                        infowindow.open(map, marker1);
+                    }
+                  })(marker1, i)); */
+
+                }
+                
+
+              }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //lun
         $("#search-input").blur(function(){
             input = $("#search-input").val();
             $.ajax({
@@ -61,6 +119,7 @@
               success: function(data){
                 console.log("Worked");
                 data = JSON.parse(JSON.stringify(data));
+                console.log(data);
                 for(i=0 ; i<data.length;i++){
                   console.log(data[i]);
                   position = new google.maps.LatLng(data[i].lat,data[i].long);
@@ -133,12 +192,12 @@
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         var infowindow = new google.maps.InfoWindow();
-        /*var marker = new google.maps.Marker({
+        var marker = new google.maps.Marker({
           map: map
         });
         marker.addListener('click', function() {
           infowindow.open(map, marker);
-        });*/
+        });
 
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
@@ -155,16 +214,16 @@
           }
 
           // Set the position of the marker using the place ID and location.
-          marker.setPlace({
+     /*     marker.setPlace({
             placeId: place.place_id,
             location: place.geometry.location
           });
           marker.setVisible(true);
-
+          console.log(place.geometry);
           infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-              'Place ID: ' + place.place_id + '<br>' +
-              place.formatted_address);
-          infowindow.open(map, marker);
+              'Place ID: ' + place.place_id + '<br>' + 
+              JSON.parse(JSON.stringify(place)));
+          infowindow.open(map, marker);*/
         });
 
 

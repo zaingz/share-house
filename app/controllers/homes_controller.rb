@@ -1,5 +1,5 @@
 class HomesController < ApplicationController
-	before_action :authenticate_user! ,except: [:index]
+	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes]
 	def index
 		@homes = Home.all
   	end
@@ -30,7 +30,7 @@ class HomesController < ApplicationController
 
   	def show_near_by_homes		
 		respond_to do |format|
-			homes = Home.near(params[:locat], 50, :units => :km)
+			homes = Home.all
 			format.json { render json: homes.to_json() }
 		end
   	end

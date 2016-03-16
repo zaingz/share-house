@@ -42,10 +42,59 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       function initMap() {
+        var input = document.getElementById('search-input');
+
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat:   -40.900557, lng: 174.885971},
           zoom: 6
+
+
+          
         });
+
+      $(document).ready(function(){
+        $("#search-input").blur(function(){
+            input = $("#search-input").val();
+            $.ajax({
+              type: "GET",
+              url: "near_homes/?locat="+input,
+              success: function(data){
+                console.log("Worked");
+                data = JSON.parse(JSON.stringify(data));
+                for(i=0 ; i<data.length;i++){
+                  console.log(data[i]);
+                  position = new google.maps.LatLng(data[i].lat,data[i].long);
+                  //img_sel = new google.maps.MarkerImage('images/p.png');
+                  marker1 = new google.maps.Marker({
+                    position: position,
+                    map: map
+
+                  });
+                  infowindow = new google.maps.InfoWindow();
+/*                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                    return function() {
+                        var markerid = marker1.alt;
+                        var res1 = markerid.split(",");
+                        var cs = 'Home';
+                        infowindow.setContent(cs);
+                        infowindow.open(map, marker1);
+                    }
+                  })(marker1, i)); */
+
+                }
+                
+
+              }
+            });
+        });
+      });
+
+        /*if(input != ""){
+            var map = new google.maps.Map(document.getElementById('map'), {
+              center: {lat:   -40.900557, lng: 174.885971},
+              zoom: 6
+            });
+        }*/
 
 //current location        
 /*var infoWindow = new google.maps.InfoWindow({map: map});
@@ -76,7 +125,7 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
       }
-        var input = document.getElementById('search-input');
+        
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
@@ -84,12 +133,12 @@
         //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
         var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
+        /*var marker = new google.maps.Marker({
           map: map
         });
         marker.addListener('click', function() {
           infowindow.open(map, marker);
-        });
+        });*/
 
         autocomplete.addListener('place_changed', function() {
           infowindow.close();
@@ -154,9 +203,38 @@
           }
           var mc = new MarkerClusterer(map,markers);
             }*/
+          
+
+
       }
 
-          
+      
+    /*$(document).ready(function(){
+      $("#search-input").blur(function(){
+          input = $("#search-input").val();
+          alert(input);
+          $.ajax({
+            type: "GET",
+            url: "near_homes/?locat="+input,
+            success: function(data){
+              data = JSON.parse(JSON.stringify(data));
+              for(i=0 ; i<data.length;i++){
+                console.log(data[i]);
+                position = new google.maps.LatLng(30.75,71.25);
+                img_sel = new google.maps.MarkerImage('images/p.png');
+                marker1 = new google.maps.Marker({
+                  position: position,
+                  map: map
+
+                });
+                infowindow = new google.maps.InfoWindow();
+              }
+              
+
+            }
+          });
+      });
+    });*/
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoUyblkGqwp2lFuWQb0v_-J_mI5sYJYPc&libraries=places&callback=initMap"

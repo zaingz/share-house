@@ -55,7 +55,7 @@
 		<div class="container">
 			<ul class="nav navbar-nav links" style="margin-left: -120px;">
 		    	<li ><a href="/" id="show-map" >Map</a></li>
-		    	<li><a href="#" id="show-list">List</a></li>
+		    	<li><a href="<%= homes_path %>" id="show-list">List</a></li>
 		    </ul>
 
 		    <ul class="nav navbar-nav navbar-right" style="margin-top: 8px">
@@ -100,7 +100,7 @@
 				});
 				}
 
-	$("#show-list").click(function(){
+	/*$("#show-list").click(function(){
 		$("#show-map").removeClass('active');
     	$("#map").hide();
 		$("#list").removeClass('hidden')
@@ -116,7 +116,10 @@
     	$("#map").show();
     	$("#show-list").removeClass('active');
 
-	});
+	});*/
+
+	
+	
  </script>
  
 	<%= yield %>

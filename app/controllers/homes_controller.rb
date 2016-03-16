@@ -30,8 +30,8 @@ class HomesController < ApplicationController
 
   	def show_near_by_homes		
 		respond_to do |format|
-			homes = Home.near('New Zealand', 50, :units => :km)
-			format.json { render json: home.to_json() }
+			homes = Home.near(params[:locat], 50, :units => :km)
+			format.json { render json: homes.to_json() }
 		end
   	end
 
@@ -39,6 +39,6 @@ class HomesController < ApplicationController
   	private
 
   	def home_params
-      params.require(:home).permit(:name, :address, :host, :contact, :email, :website, :description, :rate, :wifi, :laundry, :power, :bathroom, :toilet, :heating, :bed, :min_stay , :pets, :bond)
+      params.require(:home).permit(:title, :address, :host, :contact, :email, :website, :description, :rate, :min_stay , :pets, :bond ,:internet, :tv ,:laundry ,:heater ,:parking ,:air_cond,:h_type,:image)
     end
 end

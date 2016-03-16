@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :homes
   root 'home#index'
   devise_for :users
+  get 'near_homes' => 'homes#show_near_by_homes', :as=> ""
   #get 'home/index'
 
 

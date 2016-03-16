@@ -11,13 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315054436) do
+ActiveRecord::Schema.define(version: 20160316122135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "homes", force: :cascade do |t|
-    t.string   "name",        default: ""
+    t.string   "title",       default: ""
     t.string   "address",     default: ""
     t.string   "host",        default: ""
     t.string   "contact",     default: ""
@@ -25,14 +25,7 @@ ActiveRecord::Schema.define(version: 20160315054436) do
     t.string   "website",     default: ""
     t.string   "description", default: ""
     t.integer  "rate"
-    t.string   "wifi",        default: ""
-    t.string   "laundry",     default: ""
-    t.string   "power",       default: ""
-    t.integer  "bathroom"
-    t.string   "toilet",      default: ""
-    t.boolean  "heating",     default: false
-    t.string   "bed",         default: ""
-    t.integer  "min_stay"
+    t.string   "min_stay",    default: ""
     t.boolean  "pets",        default: false
     t.boolean  "bond",        default: false
     t.datetime "created_at",                  null: false
@@ -40,6 +33,14 @@ ActiveRecord::Schema.define(version: 20160315054436) do
     t.float    "lat"
     t.float    "long"
     t.integer  "user_id"
+    t.string   "h_type"
+    t.boolean  "internet",    default: false
+    t.boolean  "tv",          default: false
+    t.boolean  "laundry",     default: false
+    t.boolean  "air_cond",    default: false
+    t.boolean  "heater",      default: false
+    t.boolean  "parking",     default: false
+    t.string   "image"
   end
 
   create_table "users", force: :cascade do |t|

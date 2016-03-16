@@ -14,100 +14,99 @@
             <div class="row">
               <div class="col-lg-12">
 
-                <%= form_for(@homes) do |f| %> 
+                <%= form_for @homes,multiple: true do |f| %> 
                   <div class="form-group">
-                    <%= f.text_field :name,placeholder: 'Name', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :address,placeholder: 'Address', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :host,placeholder: 'Host', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :contact,placeholder: 'Contact', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :email,placeholder: 'Email', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :website,placeholder: 'Website', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :description,placeholder: 'Description', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :rate,placeholder: 'Rate', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <fieldset class="form-control">
-                      <%= label(:wifi, "Wifi: ") %>
-                      <%= f.radio_button(:wifi, "shared") %>
-                      <%= label(:wifi_shared, "Shared") %>
-                      <%= f.radio_button(:wifi, "inclusive") %>
-                      <%= label(:wifi_inclusive, "inclusive") %>
-                    </fieldset>
-                  </div>
-                  <div class="form-group">
-                    <fieldset class="form-control">
-                      <%= label(:laundry, "Laundry: ") %>
-                      <%= f.radio_button(:laundry, "True") %>
-                      <%= label(:laundry_true, "Yes") %>
-                      <%= f.radio_button(:laundry, "False") %>
-                      <%= label(:laundry_false, "No") %>
-                    </fieldset>
-                  </div>
-                  <div class="form-group">
-                    <fieldset class="form-control">
-                      <%= label(:power, "Power: ") %>
-                      <%= f.radio_button(:power, "shared") %>
-                      <%= label(:power_true, "Shared") %>
-                      <%= f.radio_button(:power, "inclusive") %>
-                      <%= label(:power_inclusive, "Inclusive") %>
-                    </fieldset>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :bathroom,placeholder: 'Bathroom', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <%= f.text_field :toilet,placeholder: 'Toilet', :class=>"form-control",autofocus: true %>
-                  </div>
-                  <div class="form-group">
-                    <fieldset class="form-control">
-                      <%= label(:heating, "Heating: ") %>
-                      <%= f.radio_button(:heating, "True") %>
-                      <%= label(:heating_true, "Yes") %>
-                      <%= f.radio_button(:heating, "False") %>
-                      <%= label(:heating_false, "No") %>
-                    </fieldset>
+                    <%= f.text_field :title,placeholder: 'Enter Listing title', :class=>"form-control",autofocus: true %>
                   </div>
                   <div class="form-group">
                   <fieldset class="form-control">
-                    <%= label(:bed, "Bed: ") %>
-                    <%= f.select(:bed, options_for_select([['Single', "single"], ['Double', "double"] , ['Dorm', "dorm"] , ['Mixed-Dorm', "mixed-dorm"]], 1)) %>
+                    <%= label(:h_type, "Select home type ") %>
+                    <%= f.select :h_type, [['Choose',""], ['Apartment', "apartment"] , ['House', "house"] , ['Other', "other"]] %>
                   </fieldset>
-                  </div>
-                  <fieldset class="form-group">
-                    <%= f.text_field :min_stay ,placeholder: 'Min stay(days)', :class=>"form-control",autofocus: true %>
-                  </fieldset>
+                  </div>   
                   <div class="form-group">
-                  <fieldset class="form-control">
-                    <%= label(:pets, "Pets: ") %>
-                    <%= f.radio_button(:pets, "True") %>
-                    <%= label(:pets_true, "Yes") %>
-                    <%= f.radio_button(:pets, "False") %>
-                    <%= label(:pets_false, "No") %>
-                  </fieldset>
+                    <fieldset class="form-control">
+                      <%= f.label "House facilities (check those available)"  %>
+                    </fieldset>
+                    <fieldset>
+                      <%= f.check_box :internet %>
+                      <%= f.label "Internet "  %>
+                      <%= f.check_box :tv %>
+                      <%= f.label "TV "  %>
+                      <%= f.check_box :laundry %>
+                      <%= f.label "Laundry "  %>
+                      <%= f.check_box :air_cond %>
+                      <%= f.label "Air-Conditioning "  %>
+                      <%= f.check_box :heater %>
+                      <%= f.label "Heater "  %>
+                      <%= f.check_box :parking %>
+                      <%= f.label "Parking"  %>
+                      
+                    </fieldset>
+                    </div>
+                  <div class="form-group">
+                    <fieldset class="form-control" >
+                      <%= f.label(:bond, "Bond required? ") %>
+
+                      <%= f.radio_button(:bond, "True") %>
+                      <%= label(:bond_true, "Yes") %>
+
+                      <%= f.radio_button(:bond, "False") %>
+                      <%= label(:bond_false, "No") %>
+
+                    </fieldset>
                   </div>
                   <div class="form-group">
-                  <fieldset class="form-control">
-                    <%= label(:bond, "Bond: ") %>
-                    <%= f.radio_button(:bond, "True") %>
-                    <%= label(:bond_true, "Yes") %>
-                    <%= f.radio_button(:bond, "False") %>
-                    <%= label(:bond_false, "No") %>
-                  </fieldset>
+                    <fieldset class="form-control">
+                      <%= label(:pets, "House has pets? (Dogs, cats, birds, etc.) ") %>
+
+                      <%= f.radio_button(:pets, "True") %>
+                      <%= label(:pets_true, "Yes") %>
+
+                      <%= f.radio_button(:pets, "False") %>
+                      <%= label(:pets_false, "No") %>
+                    </fieldset>
                   </div>
+                  <div class="form-group">
+                    <fieldset class="form-control">
+                      <%= label(:min_stay, "Minimum days stayed? ") %>
+
+                      <%= f.radio_button(:min_stay, "1 day") %>
+                      <%= label(:min_stay_1, "1 day") %>
+
+                      <%= f.radio_button(:min_stay, "2-6 days") %>
+                      <%= label(:min_stay_2to6, "2-6 days") %>
+
+                      <%= f.radio_button(:min_stay, "1 week or more") %>
+                      <%= label(:min_stay_1weekormore, "1 week or more") %>
+                    </fieldset>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :rate,placeholder: 'Price per week (NZD)', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :description,placeholder: 'More information about the place (flavor text)', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :host,placeholder: 'Host name', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :contact,placeholder: 'Contact number (mobile)', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :email,placeholder: 'Email address', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :website,placeholder: 'URL (Facebook page, website, etc.)', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :address,placeholder: 'Address (Google maps, geocode)', :class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-control">
+                      <%= f.file_field :image %>
+                    </div>
+                  </div>  
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-3 actions">

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   get 'near_homes' => 'homes#show_near_by_homes', :as=> ""
   #get 'home/index'
-
+  get 'filter_homes' => 'homes#show_filter', :as=> ""
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,4 +1,5 @@
 <style>
+
   html, body {
     height: 100%;
     margin: 0;
@@ -32,6 +33,13 @@
     <!-- <div id="map"></div> -->
 
     <script>
+    var markersArray = [];
+    function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
+}
       // This sample uses the Place Autocomplete widget to allow the user to search
       // for and select a place. The sample then displays an info window containing
       // the place ID and other information about the place that the user has
@@ -54,7 +62,7 @@
 
       $(document).ready(function(){
 
-
+        var marker1;
 
 
 
@@ -76,6 +84,9 @@
                     map: map
 
                   });
+                  markersArray.push(marker1);
+
+
                   infowindow = new google.maps.InfoWindow();
 /*                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
                     return function() {
@@ -264,6 +275,77 @@
             }*/
           
 
+            $('#submitfilter').click(function(){
+              $('#myModal').modal('hide');
+              var select = document.getElementById('select_type').value;
+              console.log("type "+select);
+              var price = document.getElementById('price_max').value;
+              console.log("price "+price);
+              var price_min = document.getElementById('price_min').value;
+              console.log("price min "+price_min);
+              var internet = document.getElementById('internet').checked;
+              console.log("internet " + internet);
+              var tv = document.getElementById('tv').checked;
+              console.log("tv " + tv);
+              var laundry = document.getElementById('laundry').checked;
+              console.log("laundry " + laundry);
+              var air_cond = document.getElementById('air_cond').checked;
+              console.log("Air-Conditioning " + air_cond);
+              var heater = document.getElementById('heater').checked;
+              console.log("heater " + heater);
+              var parking = document.getElementById('parking').checked;
+              console.log("parking " + parking);
+              var bond = document.getElementById('bond').checked;
+              console.log("bond " + bond);
+              var min_days_v;
+              var min_days = document.getElementsByName('min_days');
+              for (var i = 0; i < min_days.length; i++) {
+                  if (min_days[i].checked) {
+                      min_days_v = min_days[i].value;
+                      break;
+                  }else{
+
+                  }
+              }
+              console.log("Min days " + min_days_v);
+              var pets = document.getElementById('pets').checked;
+              console.log("pets " + pets);
+var marke0 ;
+
+              $.ajax({
+                 url: 'filter_homes/', 
+                 data: {typ: select,price_max: price,price_min: price_min,internet: internet,tv: tv,laundry: laundry, air: air_cond, heater: heater, parking: parking, bond: bond,min_days: min_days_v,pets: pets},
+                 error: function() {
+                    console.log("Error!");
+                 },
+                 success: function(data) {
+
+                    clearOverlays();
+
+                    for(i=0 ; i<data.length;i++){
+                            console.log(data[i]);
+                            
+                            position = new google.maps.LatLng(data[i].lat,data[i].long);
+                            //img_sel = new google.maps.MarkerImage('images/p.png');
+                             marke0 = new google.maps.Marker({
+                              position: position,
+                              map: map
+
+                            });
+                             markersArray.push(marke0);
+                            infowindow = new google.maps.InfoWindow();
+                          }
+                 },
+                 type: 'GET'
+              });
+            });
+
+
+
+
+
+
+
 
       }
 
@@ -294,6 +376,18 @@
           });
       });
     });*/
+// Sets the map on all markers in the array.
+  function setMapOnAll(map) {
+    for (var i = 0; i < marker1.length; i++) {
+      marker1[i].setMap(map);
+    }
+  }
+
+  // Removes the markers from the map, but keeps them in the array.
+  function clearMarkers() {
+    setMapOnAll(map);
+  }
+
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoUyblkGqwp2lFuWQb0v_-J_mI5sYJYPc&libraries=places&callback=initMap"

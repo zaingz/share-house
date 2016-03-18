@@ -73,10 +73,79 @@
 				          <h4 class="modal-title">Filter</h4>
 				        </div>
 				        <div class="modal-body">
-				          
+			            	<form role="form">
+
+							  <div class="form-group">
+							    <label>Select home type</label>
+							    <select class="form-control" id="select_type" >
+								    <option value="apartment">Apartment</option>
+								    <option value="house">House</option>
+								    <option value="other">Other</option>
+								</select>
+							  </div>
+							  <div  class="form-group">
+							  	<div class=" col-md-6">
+							  		<input type="number" id="price_min" value="0" class="form-control" placeholder="Min Price" >
+							  	</div>
+							  	<div class=" col-md-6">
+							  		<input type="number" id="price_max" value="10000" class="form-control" placeholder="Max Price" >
+							  	</div>
+							  	
+							    
+							  </div>
+
+							  	<div class="form-group" >
+							  		<label class="control-label"></label>
+								  	<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="internet">Internet</label>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="tv">TV</label>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="laundry">Laundry</label>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="air_cond">Air-Conditioning</label>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="heater">Heater</label>
+									</div>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="parking">Parking</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+							  		<label class="form-control">Minimum days stayed?</label>
+									<div class="radio">
+									  <label><input type="radio" name="min_days" value="1 day">1 day</label>
+									</div>
+									<div class="radio">
+									  <label><input type="radio" name="min_days" value="2-6 days">2-6 days</label>
+									</div>
+									<div class="radio">
+									  <label><input type="radio" name="min_days" value="1 week or more">1 week or more</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+							  		<label class="form-control">Bond required?</label>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="bond">Bond</label>
+									</div>
+								</div>
+
+								<div class="form-group">
+							  		<label class="form-control">House has pets?</label>
+									<div class="checkbox">
+									  <label><input type="checkbox" value="true" id="pets">Pets</label>
+									</div>
+								</div>
+							</form>
 				        </div>
 				        <div class="modal-footer">
-				          <button type="button" class="btn btn-default" id="submitfilter">Reset</button>
+				          <button type="button" class="btn btn-success" id="submitfilter" onclick="filterhome()">Filter</button>
 				          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				        </div>
 				      </div>
@@ -110,17 +179,76 @@
  <div id="list" class="hidden"></div>
  <script type="text/javascript">
  	function destroy() {
-      	      	$.ajax({
-				   url: '<%= destroy_user_session_path %>', 
-				   error: function() {
-				      console.log("Error!");
-				   },
-				   success: function(data) {
-				      location.reload();
-				   },
-				   type: 'DELETE'
-				});
-				}
+      	$.ajax({
+		   url: '<%= destroy_user_session_path %>', 
+		   error: function() {
+		      console.log("Error!");
+		   },
+		   success: function(data) {
+		      location.reload();
+		   },
+		   type: 'DELETE'
+		});
+	}
+
+	function filterhome(){
+		$('#myModal').modal('hide');
+/*		var select = document.getElementById('select_type').value;
+		console.log("type "+select);
+		var price = document.getElementById('price_max').value;
+		console.log("price "+price);
+		var internet = document.getElementById('internet').checked;
+		console.log("internet " + internet);
+		var tv = document.getElementById('tv').checked;
+		console.log("tv " + tv);
+		var laundry = document.getElementById('laundry').checked;
+		console.log("laundry " + laundry);
+		var air_cond = document.getElementById('air_cond').checked;
+		console.log("Air-Conditioning " + air_cond);
+		var heater = document.getElementById('heater').checked;
+		console.log("heater " + heater);
+		var parking = document.getElementById('parking').checked;
+		console.log("parking " + parking);
+		var bond = document.getElementById('bond').checked;
+		console.log("bond " + bond);
+		var min_days_v;
+		var min_days = document.getElementsByName('min_days');
+		for (var i = 0; i < min_days.length; i++) {
+		    if (min_days[i].checked) {
+		        min_days_v = min_days[i].value;
+		        break;
+		    }else{
+
+		    }
+		}
+		console.log("Min days " + min_days_v);
+		var pets = document.getElementById('pets').checked;
+		console.log("pets " + pets);
+
+
+		$.ajax({
+		   url: 'filter_homes/', 
+		   data: {typ: select,price: price,internet: internet,tv: tv,laundry: laundry, air: air_cond, heater: heater, parking: parking, bond: bond,min_days: min_days_v,pets: pets},
+		   error: function() {
+		      console.log("Error!");
+		   },
+		   success: function(data) {
+		      for(i=0 ; i<data.length;i++){
+                  console.log(data[i]);
+                  position = new google.maps.LatLng(data[i].lat,data[i].long);
+                  //img_sel = new google.maps.MarkerImage('images/p.png');
+                  marker1 = new google.maps.Marker({
+                    position: position,
+                    map: map
+
+                  });
+                  infowindow = new google.maps.InfoWindow();
+                }
+		   },
+		   type: 'GET'
+		});*/
+
+	}
 
 	/*$("#show-list").click(function(){
 		$("#show-map").removeClass('active');
@@ -132,6 +260,7 @@
 
 	});
 
+	
 	$("#show-map").click(function(){
 		$("#show-map").addClass('active');
     	$("#list").hide();

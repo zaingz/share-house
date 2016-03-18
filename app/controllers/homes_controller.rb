@@ -1,5 +1,5 @@
 class HomesController < ApplicationController
-	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes]
+	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes, :show_filter]
 	def index
 		@homes = Home.all
   	end
@@ -29,11 +29,20 @@ class HomesController < ApplicationController
   	end
 
   	def show_near_by_homes		
-		respond_to do |format|
-			homes = Home.all
-			format.json { render json: homes.to_json() }
-		end
+  		respond_to do |format|
+  			homes = Home.all
+  			format.json { render json: homes.to_json() }
+  		end
   	end
+
+    def show_filter
+      p params["price_min"]..params["price_max"]
+
+      respond_to do |format|
+        homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["min_days"],params["pets"],params["bond"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"], params["typ"])
+        format.json { render json: homes.to_json() }
+      end
+    end
 
 
   	private

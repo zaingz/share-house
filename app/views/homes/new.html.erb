@@ -14,7 +14,16 @@
             <div class="row">
               <div class="col-lg-12">
 
-                <%= form_for @homes,multiple: true do |f| %> 
+                <%= form_for @homes,multiple: true do |f| %>
+                  <% if @homes.errors.any? %>
+                    <div class="alert alert-danger">
+                      <ul>
+                        <% @homes.errors.full_messages.each do |msg| %>
+                          <li><%= msg %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
                   <div class="form-group">
                     <%= f.text_field :title,placeholder: 'Enter Listing title', :class=>"form-control",autofocus: true %>
                   </div>

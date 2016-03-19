@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
 	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes, :show_filter ,:show]
+  before_filter :is_admin?, only: [:destroy]
 	def index
 		@homes = Home.all
   	end
@@ -25,6 +26,14 @@ class HomesController < ApplicationController
   	def show
       @home = Home.find(params[:id])
   	end
+
+    def destroy
+   
+      @home = Home.find(params[:id])
+      @home.destroy
+    
+      redirect_to :admin
+    end
 
   	def show_near_by_homes		
   		respond_to do |format|

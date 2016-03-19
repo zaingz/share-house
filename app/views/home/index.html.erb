@@ -87,16 +87,26 @@
                   markersArray.push(marker1);
 
 
-                  infowindow = new google.maps.InfoWindow();
-/*                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                  infowindow = new google.maps.InfoWindow({
+                    maxWidth: 350
+                  });
+                google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
                     return function() {
                         var markerid = marker1.alt;
-                        var res1 = markerid.split(",");
-                        var cs = 'Home';
+                        //var res1 = markerid.split(",");
+                        var cs = '<div >' +
+                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<div >' +
+                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
+                            '<p><strong>Address:</strong> '+data[i].address+
+                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                        '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
+
                     }
-                  })(marker1, i)); */
+                  })(marker1, i)); 
 
                 }
                 
@@ -141,15 +151,22 @@
 
                   });
                   infowindow = new google.maps.InfoWindow();
-/*                  google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
                     return function() {
                         var markerid = marker1.alt;
-                        var res1 = markerid.split(",");
-                        var cs = 'Home';
+                        //var res1 = markerid.split(",");
+                        var cs =  '<div >' +
+                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<div >' +
+                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
+                            '<p><strong>Address:</strong> '+data[i].address+
+                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                        '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
                     }
-                  })(marker1, i)); */
+                  })(marker1, i)); 
 
                 }
                 
@@ -334,6 +351,22 @@ var marke0 ;
                             });
                              markersArray.push(marke0);
                             infowindow = new google.maps.InfoWindow();
+                google.maps.event.addListener(marke0, 'click', (function(marker1, i) {
+                    return function() {
+                        var markerid = marke0.alt;
+                        //var res1 = markerid.split(",");
+                        var cs =  '<div >' +
+                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<div >' +
+                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
+                            '<p><strong>Address:</strong> '+data[i].address+
+                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                        '</div>';
+                        infowindow.setContent(cs);
+                        infowindow.open(map, marke0);
+                    }
+                  })(marke0, i)); 
                           }
                  },
                  type: 'GET'

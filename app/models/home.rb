@@ -5,7 +5,8 @@ class Home < ActiveRecord::Base
 	belongs_to :user
 	has_one :facility
 	mount_uploader :image, ImageUploader
-	validates_presence_of :image
+	validates_presence_of :image, :rate
+	validates :rate, :numericality => { :greater_than_or_equal_to => 0 }
 	geocoded_by :address,
 		:latitude => :lat, :longitude => :long
 	after_validation :geocode

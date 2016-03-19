@@ -1,0 +1,56 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-7">
+			<h3>$<%= @home.rate %> - <%= @home.h_type.capitalize %></h3>
+			<h5><%= @home.address %></h5>
+			<h4><%= mail_to @home.email %></a></h4>
+			<h4><%= @home.contact %></h4>
+			<br>
+			<img src="<%= @home.image.url %>" class="img-responsive" width="150%" height="150%">		 
+		</div>
+		<div class="col-md-5">
+			<h3 style="margin-top: 25px">Details </h3>
+			<ul class="list-group show_hom">
+			    <li class="list-group-item"><strong>Price: </strong><%= @home.rate %></li>
+			    <li class="list-group-item"><strong>Min. Lease: </strong><%= @home.min_stay %></li>
+			    <li class="list-group-item"><strong>Internet: </strong><%= @home.internet ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>TV: </strong><%= @home.tv ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Laundry: </strong><%= @home.laundry ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Air Conditioning: </strong><%= @home.air_cond ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Heater: </strong><%= @home.heater ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Parking: </strong><%= @home.parking ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Pets: </strong><%= @home.pets ? "Yes" : "No"%></li>
+			    <li class="list-group-item"><strong>Bond: </strong><%= @home.bond ? "Yes" : "No"%></li>
+			</ul>
+		</div>		
+	</div>
+	<input class="hidden"  id="latfromhome" value="<%= @home.lat %>"></input>
+	<input class="hidden" id="longfromhome" value="<%= @home.long %>"></input>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<h5>&nbsp&nbspLocation</h5>
+		<div class="col-md-12" id="mapforshow"></div>
+	</div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+<script>
+
+  function initMap() {
+  	var lat = document.getElementById("latfromhome").value;
+  	var long = document.getElementById('longfromhome').value;
+  	var lati = parseFloat(lat);
+  	var longi = parseFloat(long);	
+  	console.log("lat: "+lat + " long: " + long);
+    var mapDiv = document.getElementById('mapforshow');
+    var map = new google.maps.Map(mapDiv, {
+      center: {lat: lati, lng: longi},
+      zoom: 16
+    });
+    position = new google.maps.LatLng(lati,longi);
+	marker1 = new google.maps.Marker({
+	    position: position,
+	    map: map
+	});
+  }
+</script>

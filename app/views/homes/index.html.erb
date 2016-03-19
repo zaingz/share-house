@@ -1,5 +1,5 @@
 
- <table class="table table-striped">
+ <table class="table table-striped" >
     <thead>
       <tr>
         <th>Image</th>
@@ -8,15 +8,62 @@
         <th>Description</th>
       </tr>
     </thead>
-    <tbody>
-      <% for home in @homes %>
-      <tr>
-        <td><%= image_tag(home.image_url(:thumbnail), :width => 50, :height => 50)
- %></td>
-        <td><%= home.address %></td>
-        <td><%= home.rate %></td>
-        <td><%= home.description %></td>
-      </tr>
-      <% end %>
+    <tbody id="list-table">
+      <%= render :partial => 'table_list', :object => @homes %>
     </tbody>
  </table>
+ <script type="text/javascript">
+   $('#submitfilter').click(function(){
+              $('#myModal').modal('hide');
+              var select = document.getElementById('select_type').value;
+              console.log("type "+select);
+              var price = document.getElementById('price_max').value;
+              console.log("price "+price);
+              var price_min = document.getElementById('price_min').value;
+              console.log("price min "+price_min);
+              var internet = document.getElementById('internet').checked;
+              console.log("internet " + internet);
+              var tv = document.getElementById('tv').checked;
+              console.log("tv " + tv);
+              var laundry = document.getElementById('laundry').checked;
+              console.log("laundry " + laundry);
+              var air_cond = document.getElementById('air_cond').checked;
+              console.log("Air-Conditioning " + air_cond);
+              var heater = document.getElementById('heater').checked;
+              console.log("heater " + heater);
+              var parking = document.getElementById('parking').checked;
+              console.log("parking " + parking);
+              var bond = document.getElementById('bond').checked;
+              console.log("bond " + bond);
+              var min_days_v;
+              var min_days = document.getElementsByName('min_days');
+              for (var i = 0; i < min_days.length; i++) {
+                  if (min_days[i].checked) {
+                      min_days_v = min_days[i].value;
+                      break;
+                  }else{
+
+                  }
+              }
+              console.log("Min days " + min_days_v);
+              var pets = document.getElementById('pets').checked;
+              console.log("pets " + pets);
+
+              $.ajax({
+                 url: 'filter_homes/', 
+                 data: {typ: select,price_max: price,price_min: price_min,internet: internet,tv: tv,laundry: laundry, air: air_cond, heater: heater, parking: parking, bond: bond,min_days: min_days_v,pets: pets},
+                 error: function() {
+                    console.log("Error!");
+                 },
+                 success: function(data) {
+                    $('#list-table').html("");
+                    for(i=0 ; i<data.length;i++){
+                      console.log(data[i]);
+                      rowdata = "<tr><td><img src="+data[i].image.url+" width=50 height=50></td><td>"+data[i].address+"</td><td>"+data[i].rate+"</td><td>"+data[i].description+"</td></tr>";
+                      $('#list-table').append(rowdata);
+                    }
+                 },
+                 type: 'GET'
+              });
+            });
+ </script>

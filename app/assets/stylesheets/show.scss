@@ -1,0 +1,10 @@
+.show_hom li:nth-child(odd) {
+background-color: #f1f1f1; }
+
+.show_hom li:nth-child(even) {
+background-color: #fafafa; }
+
+#mapforshow {
+    width: 100%;
+    height: 400px;
+  }

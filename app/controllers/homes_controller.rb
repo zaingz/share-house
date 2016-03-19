@@ -1,5 +1,5 @@
 class HomesController < ApplicationController
-	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes, :show_filter]
+	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes, :show_filter ,:show]
 	def index
 		@homes = Home.all
   	end
@@ -23,9 +23,7 @@ class HomesController < ApplicationController
   	end
 
   	def show
-  		#redirect_to homes_path
-  		redirect_to url_for(:controller => :home, :action => :index)
-  		return
+      @home = Home.find(params[:id])
   	end
 
   	def show_near_by_homes		

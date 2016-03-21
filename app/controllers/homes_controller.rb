@@ -1,6 +1,6 @@
 class HomesController < ApplicationController
 	before_action :authenticate_user! ,except: [:index ,:show_near_by_homes, :show_filter ,:show]
-  before_filter :is_admin?, only: [:destroy]
+  before_filter :is_admin?, only: [:destroy, :edit]
 	def index
 		@homes = Home.all
   	end
@@ -8,6 +8,23 @@ class HomesController < ApplicationController
   	def new
   		@homes = Home.new
   	end
+
+    def edit
+      @home = Home.find(params[:id])
+    end
+
+    def update
+      @home = Home.find(params[:id])
+      respond_to do |format|
+        if @home.update(home_params)
+          format.html { redirect_to @home, notice: 'Home was successfully updated.' }
+          format.json { render :index, status: :updated, location: @home }
+        else
+          format.html { render :edit }
+          format.json { render json: @home.errors, status: :unprocessable_entity }   
+        end
+      end
+    end
 
   	def create
   		@homes = Home.new(home_params)
@@ -44,7 +61,6 @@ class HomesController < ApplicationController
 
     def show_filter
       p params["price_min"]..params["price_max"]
-
       respond_to do |format|
         homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["min_days"],params["pets"],params["bond"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"], params["typ"])
         format.json { render json: homes.to_json() }

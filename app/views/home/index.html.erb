@@ -6,7 +6,7 @@
     padding: 0;
   }
   #map {
-    height: 83%;
+    height: 610px;
   }
   .controls {
     background-color: #fff;
@@ -30,9 +30,125 @@
     border-color: #4d90fe;
   }
 </style>
-    <!-- <div id="map"></div> -->
+<!--   <div >
+    <div id="map"></div>
+  </div> -->
+      
 
-    <script>
+
+
+
+
+<div class="container-fluid" style="margin-top: -16px;">
+  <div class="row">
+    <div class="col-md-3">
+      <form role="form">
+        <div class="form-group">
+          <label>Select home type</label>
+          <select class="form-control" id="select_type" >
+            <option value="">Choose</option>
+            <option value="apartment">Apartment</option>
+            <option value="house">House</option>
+            <option value="other">Other</option>
+        </select>
+        </div>
+        <div  class="form-group">
+          <div class=" col-md-6">
+            <input type="number" id="price_min" value="0" class="form-control" placeholder="Min Price" >
+          </div>
+          <div class=" col-md-6">
+            <input type="number" id="price_max" value="10000" class="form-control" placeholder="Max Price" >
+          </div>
+          
+          
+        </div>
+
+          <div class="form-group" >
+            <label class="control-label"></label>
+            <div class="checkbox">
+            <label><input type="checkbox" value="true" id="internet">Internet</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="tv">TV</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="laundry">Laundry</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="air_cond">Air-Conditioning</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="heater">Heater</label>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="parking">Parking</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control">Minimum days stayed?</label>
+          <div class="radio">
+            <label><input type="radio" name="min_days" value="1 day">1 day</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="min_days" value="2-6 days">2-6 days</label>
+          </div>
+          <div class="radio">
+            <label><input type="radio" name="min_days" value="1 week or more">1 week or more</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control">Bond required?</label>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="bond">Bond</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control">House has pets?</label>
+          <div class="checkbox">
+            <label><input type="checkbox" value="true" id="pets">Pets</label>
+          </div>
+        </div>
+      </form>
+      <button type="button" class="btn btn-success" style="padding-top: 5px;padding-bottom: 5px;margin-left: 110px;" id="submitfilter">Filter</button>
+    </div>
+    <div id='list' class="col-md-4">
+      <table class="table table-striped" >
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Address</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="list-table">
+          <% for home in @homes %>
+            <tr>
+              <td><%= image_tag(home.image_url(:thumbnail), :width => 50, :height => 50)%></td>
+              <td><%= home.address %></td>
+              <td><%= home.rate %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div id="map" class="col-md-5">
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<script>
     var markersArray = [];
     function clearOverlays() {
   for (var i = 0; i < markersArray.length; i++ ) {
@@ -51,10 +167,10 @@
 
       function initMap() {
         var input = document.getElementById('search-input');
-
+        console.log("initilalizing map");
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat:   -40.900557, lng: 174.885971},
-          zoom: 6
+          zoom: 5
 
 
           
@@ -70,7 +186,7 @@
 
  $.ajax({
               type: "GET",
-              url: "near_homes/?locat="+input,
+              url: "/homes",
               success: function(data){
                 console.log("Worked");
                 data = JSON.parse(JSON.stringify(data));
@@ -97,7 +213,7 @@
                         var cs = '<div >' +
                           '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
+                            '<div ><strong>Type:</strong> '+data[i].h_type.capitalize+'</div>' +
                             '<p><strong>Address:</strong> '+data[i].address+
                             '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
                           '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
@@ -128,7 +244,7 @@
 
 
 
-
+        var marker0;
 
 
         //lun
@@ -140,25 +256,30 @@
               success: function(data){
                 console.log("Worked");
                 data = JSON.parse(JSON.stringify(data));
-                console.log(data);
+                $('#list-table').html("");
+                clearOverlays();
+                if(data.length <= 0){
+                  $('#list-table').html("<tr><td></td><td>No house to show</td><td></td></tr>");
+                }
                 for(i=0 ; i<data.length;i++){
                   console.log(data[i]);
                   position = new google.maps.LatLng(data[i].lat,data[i].long);
                   //img_sel = new google.maps.MarkerImage('images/p.png');
-                  marker1 = new google.maps.Marker({
+                  marker0 = new google.maps.Marker({
                     position: position,
                     map: map
 
                   });
+                  markersArray.push(marker0);
                   infowindow = new google.maps.InfoWindow();
-                google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
+                google.maps.event.addListener(marker0, 'click', (function(marker1, i) {
                     return function() {
-                        var markerid = marker1.alt;
+                        var markerid = marker0.alt;
                         //var res1 = markerid.split(",");
                         var cs =  '<div >' +
                           '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
+                            '<div ><strong>Type:</strong> '+data[i].h_type.capitalize+'</div>' +
                             '<p><strong>Address:</strong> '+data[i].address+
                             '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
                           '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
@@ -166,7 +287,10 @@
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
                     }
-                  })(marker1, i)); 
+                  })(marker0, i)); 
+
+                rowdata = "<tr><td><img src="+data[i].image.url+" width=50 height=50></td><td>"+data[i].address+"</td><td>"+data[i].rate+"</td></tr>";
+                      $('#list-table').append(rowdata);
 
                 }
                 
@@ -336,9 +460,11 @@ var marke0 ;
                     console.log("Error!");
                  },
                  success: function(data) {
-
+                    $('#list-table').html("");
                     clearOverlays();
-
+                    if(data.length <= 0){
+                      $('#list-table').html("<tr><td></td><td>No house to show</td><td></td></tr>");
+                    }
                     for(i=0 ; i<data.length;i++){
                             console.log(data[i]);
                             
@@ -367,6 +493,10 @@ var marke0 ;
                         infowindow.open(map, marke0);
                     }
                   })(marke0, i)); 
+
+                rowdata = "<tr><td><img src="+data[i].image.url+" width=50 height=50></td><td>"+data[i].address+"</td><td>"+data[i].rate+"</td></tr>";
+                      $('#list-table').append(rowdata);
+
                           }
                  },
                  type: 'GET'
@@ -425,3 +555,7 @@ var marke0 ;
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoUyblkGqwp2lFuWQb0v_-J_mI5sYJYPc&libraries=places&callback=initMap"
         async defer></script>
+
+
+
+

@@ -112,7 +112,7 @@
           </div>
         </div>
       </form>
-      <button type="button" class="btn btn-success" style="padding-top: 5px;padding-bottom: 5px;margin-left: 110px;" id="submitfilter">Filter</button>
+      <button type="button" class="btn btn-success" style="padding-top: 5px;padding-bottom: 5px;margin-bottom: 10px;width: 100%" id="submitfilter">Filter</button>
     </div>
     <div id='list' class="col-md-4">
       <table class="table table-striped" >
@@ -128,7 +128,7 @@
 
          
             <tr>
-              <td> <a href="<%="/homes/#{home.id}"%>"><%= image_tag(home.image_url(:thumbnail), :width => 50, :height => 50)%>  </a></td>
+              <td> <a href="<%="/homes/#{home.id}"%>"><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%>  </a></td>
               <td><%= home.address %></td>
               <td><%= home.rate %></td>
             </tr>

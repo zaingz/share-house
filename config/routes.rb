@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
 
+  resources :photos
   resources :homes
   root 'home#index'
   devise_for :users

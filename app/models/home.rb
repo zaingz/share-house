@@ -3,8 +3,14 @@ class Home < ActiveRecord::Base
 
 
 	belongs_to :user
-	mount_uploader :image, ImageUploader
-	validates_presence_of :image, :rate
+
+	has_many :photos
+	accepts_nested_attributes_for :photos
+
+
+
+	validates_length_of :photos, maximum: 4
+	validates_presence_of :rate
 	validates :rate, :numericality => { :greater_than_or_equal_to => 0 }
 	geocoded_by :address,
 		:latitude => :lat, :longitude => :long

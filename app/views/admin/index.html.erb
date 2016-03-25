@@ -5,6 +5,7 @@
         <th>Address</th>
         <th>Price</th>
         <th>Description</th>
+        <th>Created at</th>
         <th></th>
         <th></th>
       </tr>
@@ -16,6 +17,8 @@
         <td><%= home.address %></td>
         <td><%= home.rate %></td>
         <td><%= home.description %></td>
+        <td><%= time_ago_in_words(home.created_at) + " ago" %></td>
+
         <th><%= link_to "Show", { :controller => :homes, :action => :show ,:id => home.id }, { class: "btn btn-primary", style: "width: 100%;" } %></th>
         <th><a href="/homes/<%=home.id%>/edit" data-method="get" class="btn btn-info" style="width:100%">Edit</a></th>
         <th><a href="/homes/<%=home.id%>" data-method="delete" class="btn btn-danger" style="width:100%">Delete</a></th>

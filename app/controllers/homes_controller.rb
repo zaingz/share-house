@@ -21,6 +21,9 @@ class HomesController < ApplicationController
     @home = Home.find(params[:id])
     respond_to do |format|
       if @home.update(home_params)
+         params[:photo]['image'].each do |a|
+          @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
+       end
         format.html { redirect_to @home, notice: 'Home was successfully updated.' }
         format.json { render :index, status: :updated, location: @home }
       else
@@ -35,6 +38,9 @@ class HomesController < ApplicationController
 		@homes.user_id = current_user.id
 		respond_to do |format|
       if @homes.save
+          params[:photo]['image'].each do |a|
+          @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
+       end
         format.html { redirect_to @homes, notice: 'Home was successfully created.' }
         format.json { render :index, status: :created, location: @homes }
       else
@@ -75,6 +81,6 @@ class HomesController < ApplicationController
 	private
 
 	def home_params
-    params.require(:home).permit(:title, :address, :host, :contact, :email, :website, :description, :rate, :min_stay , :pets, :bond ,:internet, :tv ,:laundry ,:heater ,:parking ,:air_cond,:h_type,:image)
+    params.require(:home).permit(:title, :address, :host, :contact, :email, :website, :description, :rate, :min_stay , :pets, :bond ,:internet, :tv ,:laundry ,:heater ,:parking ,:air_cond,:h_type, photo: [:id, :home_id, :image])
   end
 end

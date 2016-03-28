@@ -1,6 +1,10 @@
 
 class Home < ActiveRecord::Base
 
+include ActiveModel::Serialization
+
+
+
 
 	belongs_to :user
 
@@ -18,8 +22,9 @@ class Home < ActiveRecord::Base
 
 
 	
-def self.search(rate, min_stay , pets,  bond , internet,  tv , laundry , heater , parking , air_cond, h_type)
+def self.search(rate, locat, min_stay , pets,  bond , internet,  tv , laundry , heater , parking , air_cond, h_type)
 		scope=  Home.all
+		scope= scope.near(locat, 20) if locat!=""
 		scope= scope.where(rate: rate) if rate 
 		scope= scope.where(min_stay: min_stay) if min_stay!= nil
 		scope= scope.where(pets: pets) if pets!="false"

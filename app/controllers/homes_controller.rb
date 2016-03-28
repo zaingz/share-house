@@ -4,7 +4,7 @@ class HomesController < ApplicationController
 
 	def index
 		respond_to do |format|
-      homes = Home.all
+      homes = Home.near([-40.900557,174.885971], 20)
       format.json { render json: homes.to_json() }
     end
 	end
@@ -64,16 +64,16 @@ class HomesController < ApplicationController
 
 	def show_near_by_homes		
 		respond_to do |format|
-			homes = Home.near(params[:locat], 50, :units => :km)
-			format.json { render json: homes.to_json() }
+			homes = Home.near(params[:locat], 20)
+			format.json { render json: homes.map{|f| HomesSerializer.new(f)}.to_json}
 		end
 	end
 
   def show_filter
     p params["price_min"]..params["price_max"]
     respond_to do |format|
-      homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["min_days"],params["pets"],params["bond"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"], params["typ"])
-      format.json { render json: homes.to_json() }
+      homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["locat"], params["min_days"],params["pets"],params["bond"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"], params["typ"])
+      format.json { render json: homes.map{|f| HomesSerializer.new(f)}.to_json }
     end
   end
 

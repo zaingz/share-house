@@ -36,7 +36,8 @@ gem 'devise'
 gem 'geocoder'
 gem 'cloudinary'
 gem 'carrierwave'
-
+gem 'jquery-ui-rails'
+gem 'active_model_serializers'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

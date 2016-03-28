@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20160325072957) do
     t.boolean  "air_cond",    default: false
     t.boolean  "heater",      default: false
     t.boolean  "parking",     default: false
+    t.string   "image"
   end
 
   create_table "photos", force: :cascade do |t|

@@ -43,6 +43,11 @@
   <div class="row">
     <div class="col-md-3">
       <form role="form">
+
+        <div class="form-group">
+            <input type="text"  id="search-input" class="form-control" placeholder="Location">
+        </div>
+
         <div class="form-group">
           <label>Select home type</label>
           <select class="form-control" id="select_type" >
@@ -62,6 +67,15 @@
           
           
         </div>
+<!--         <div class="form-group">
+            <p>
+              <label for="amount">Price range:</label>
+              <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+             
+            <div id="slider-range"></div>
+        </div> -->
+
 
           <div class="form-group" >
             <label class="control-label"></label>
@@ -120,6 +134,7 @@
           <tr>
             <th>Image</th>
             <th>Address</th>
+            <th>Description</th>
             <th>Price</th>
           </tr>
         </thead>
@@ -130,6 +145,7 @@
             <tr>
               <td> <a href="<%="/homes/#{home.id}"%>"><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%>  </a></td>
               <td><%= home.address %></td>
+              <td><%= home.description %></td>
               <td><%= home.rate %></td>
             </tr>
           
@@ -143,7 +159,21 @@
   </div>
 </div>
 
-
+<script type="text/javascript">
+$(document).ready(function() {
+    $( "#slider-range" ).slider({
+      range: true,
+      min: 0,
+      max: 10000,
+      values: [ 0, 10000 ],
+      slide: function( event, ui ) {
+        $( "#amount" ).val( "NZD" + ui.values[ 0 ] + " - NZD" + ui.values[ 1 ] );
+      }
+    });
+    $( "#amount" ).val( "NZD" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - NZD" + $( "#slider-range" ).slider( "values", 1 ) );
+  });
+</script>
 
 
 
@@ -214,7 +244,7 @@
                         var markerid = marker1.alt;
                         //var res1 = markerid.split(",");
                         var cs = '<div >' +
-                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<h3><img src='+data[i].image+' width=50 height=50>  '+data[i].title+'</h3>' +
                           '<div >' +
                             '<div ><strong>Type:</strong> '+data[i].h_type.capitalize+'</div>' +
                             '<p><strong>Address:</strong> '+data[i].address+
@@ -251,8 +281,9 @@
 
 
         //lun
-        $("#search-input").blur(function(){
+/*        $("#search-input").blur(function(){
             input = $("#search-input").val();
+
             $.ajax({
               type: "GET",
               url: "near_homes/?locat="+input,
@@ -265,8 +296,8 @@
                   $('#list-table').html("<tr><td></td><td>No house to show</td><td></td></tr>");
                 }
                 for(i=0 ; i<data.length;i++){
-                  console.log(data[i]);
-                  position = new google.maps.LatLng(data[i].lat,data[i].long);
+                  console.log(data[i].homes);
+                  position = new google.maps.LatLng(data[i].homes.lat,data[i].homes.long);
                   //img_sel = new google.maps.MarkerImage('images/p.png');
                   marker0 = new google.maps.Marker({
                     position: position,
@@ -280,19 +311,19 @@
                         var markerid = marker0.alt;
                         //var res1 = markerid.split(",");
                         var cs =  '<div >' +
-                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<h3><img src='+data[i].homes.image+' width=50 height=50>  '+data[i].homes.title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].h_type.capitalize+'</div>' +
-                            '<p><strong>Address:</strong> '+data[i].address+
-                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
-                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                            '<div ><strong>Type:</strong> '+data[i].homes.h_type.capitalize+'</div>' +
+                            '<p><strong>Address:</strong> '+data[i].homes.address+
+                            '<br><strong>Phone:</strong> '+data[i].homes.contact+'<br><strong>E-mail:</strong> '+data[i].homes.email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].homes.id+'" class="btn btn-default" role="button">Details</a></div>' +
                         '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
                     }
                   })(marker0, i)); 
 
-                rowdata = "<tr><td><img src="+data[i].image.url+" width=50 height=50></td><td>"+data[i].address+"</td><td>"+data[i].rate+"</td></tr>";
+                rowdata = "<tr><td><img src="+data[i].homes.image+" width=50 height=50></td><td>"+data[i].homes.address+"</td><td>"+data[i].homes.description+"</td><td>"+data[i].homes.rate+"</td></tr>";
                       $('#list-table').append(rowdata);
 
                 }
@@ -300,7 +331,7 @@
 
               }
             });
-        });
+        });*/
       });
 
         /*if(input != ""){
@@ -421,6 +452,8 @@
 
             $('#submitfilter').click(function(){
               $('#myModal').modal('hide');
+              var locat = document.getElementById('search-input').value;
+              console.log("Location "+locat);
               var select = document.getElementById('select_type').value;
               console.log("type "+select);
               var price = document.getElementById('price_max').value;
@@ -458,7 +491,7 @@ var marke0 ;
 
               $.ajax({
                  url: 'filter_homes/', 
-                 data: {typ: select,price_max: price,price_min: price_min,internet: internet,tv: tv,laundry: laundry, air: air_cond, heater: heater, parking: parking, bond: bond,min_days: min_days_v,pets: pets},
+                 data: {locat: locat,typ: select,price_max: price,price_min: price_min,internet: internet,tv: tv,laundry: laundry, air: air_cond, heater: heater, parking: parking, bond: bond,min_days: min_days_v,pets: pets},
                  error: function() {
                     console.log("Error!");
                  },
@@ -469,10 +502,12 @@ var marke0 ;
                       $('#list-table').html("<tr><td></td><td>No house to show</td><td></td></tr>");
                     }
                     for(i=0 ; i<data.length;i++){
-                            console.log(data[i]);
+                            console.log(data[i].homes);
                             
-                            position = new google.maps.LatLng(data[i].lat,data[i].long);
+                            position = new google.maps.LatLng(data[i].homes.lat,data[i].homes.long);
+                            console.log(data[i].homes.lat + " " + data[i].homes.long);
                             //img_sel = new google.maps.MarkerImage('images/p.png');
+                            
                              marke0 = new google.maps.Marker({
                               position: position,
                               map: map
@@ -485,19 +520,19 @@ var marke0 ;
                         var markerid = marke0.alt;
                         //var res1 = markerid.split(",");
                         var cs =  '<div >' +
-                          '<h3><img src='+data[i].image.url+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<h3><img src='+data[i].homes.image+' width=50 height=50>  '+data[i].homes.title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].h_type+'</div>' +
-                            '<p><strong>Address:</strong> '+data[i].address+
-                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
-                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                            '<div ><strong>Type:</strong> '+data[i].homes.h_type+'</div>' +
+                            '<p><strong>Address:</strong> '+data[i].homes.address+
+                            '<br><strong>Phone:</strong> '+data[i].homes.contact+'<br><strong>E-mail:</strong> '+data[i].homes.email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].homes.id+'" class="btn btn-default" role="button">Details</a></div>' +
                         '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marke0);
                     }
                   })(marke0, i)); 
 
-                rowdata = "<tr><td><img src="+data[i].image.url+" width=50 height=50></td><td>"+data[i].address+"</td><td>"+data[i].rate+"</td></tr>";
+                rowdata = "<tr><td><img src="+data[i].homes.image+" width=50 height=50></td><td>"+data[i].homes.address+"</td><td>"+data[i].homes.description+"</td><td>"+data[i].homes.rate+"</td></tr>";
                       $('#list-table').append(rowdata);
 
                           }

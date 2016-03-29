@@ -2,7 +2,7 @@
 
 <a href="/homes/#{home.id}">
       <tr>
-        <td><%= image_tag(home.image_url(:thumbnail), :width => 50, :height => 50)%></td>
+        <td><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%></td>
         <td><%= home.address %></td>
         <td><%= home.rate %></td>
         <td><%= home.description %></td>

@@ -6,7 +6,7 @@
     padding: 0;
   }
   #map {
-    height: 610px;
+    height: 700px;
   }
   .controls {
     background-color: #fff;
@@ -58,22 +58,22 @@
         </select>
         </div>
         <div  class="form-group">
-          <div class=" col-md-6">
-            <input type="number" id="price_min" value="0" class="form-control" placeholder="Min Price" >
+          <label>Price:</label>
+          <div class="nstSlider" data-range_min="0" data-range_max="10000" data-cur_min="1000"    data-cur_max="5000">
+
+            <div class="bar"></div>
+            <div class="leftGrip" ></div>
+            <div class="rightGrip" ></div>
           </div>
-          <div class=" col-md-6">
-            <input type="number" id="price_max" value="10000" class="form-control" placeholder="Max Price" >
-          </div>
-          
-          
+          <div class="col-md-3 col-md-offset-3" ><span>Min: </span><div class="leftLabel"></div></div>
+          <div class="col-md-3" ><span>Max: </span><div class="rightLabel"></div></div>
+          <input type="text" id="price_max" class="hidden">
+          <input type="text" id="price_min" class="hidden">
         </div>
+
 <!--         <div class="form-group">
-            <p>
-              <label for="amount">Price range:</label>
-              <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-            </p>
-             
-            <div id="slider-range"></div>
+          <input type="number" id="price_max" class="hidden">
+          <input type="number" id="price_min" class="hidden">
         </div> -->
 
 
@@ -142,13 +142,13 @@
           <% for home in @homes %>
 
          
-            <tr>
+            <tr id="list<%= home.id %>" value="<%= home.lat %> <%= home.long %>">
               <td> <a href="<%="/homes/#{home.id}"%>"><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%>  </a></td>
               <td><%= home.address %></td>
               <td><%= home.description %></td>
               <td><%= home.rate %></td>
             </tr>
-          
+            
           <% end %>
         </tbody>
       </table>
@@ -160,18 +160,54 @@
 </div>
 
 <script type="text/javascript">
+  $(document).ready(function(){
+    for (var i = 0; i < 5; i++) {
+     $("#list"+i).hover(function(){
+        var latlong = $(this).attr("value");
+        var latilongi = latlong.split(" ");
+        var lat = latilongi[0];
+        var long = latilongi[1];
+        console.log("Latitude: " + lat);
+        console.log("Longitude: " + long);
+
+        var temp = new google.maps.LatLng(lat,long);
+        var mapi = new google.maps.Map(document.getElementById('map'), {
+          center: {lat:   -40.900557, lng: 174.885971},
+          zoom: 5  
+        });
+        var mak = new google.maps.Marker({
+                    position: temp,
+                    map: mapi
+                  });
+        console.log(mak);
+        for(var k = 0 ; k < markersArray.length; k++){
+          console.log(markersArray[k]);
+          if(mak == markersArray[k]){
+            console.log("mil gya");
+          }else{
+            console.log("loray lag gaye");
+          }
+        }
+      }, function(){
+        
+      });
+    }
+  });
+</script>
+
+<script type="text/javascript">
 $(document).ready(function() {
-    $( "#slider-range" ).slider({
-      range: true,
-      min: 0,
-      max: 10000,
-      values: [ 0, 10000 ],
-      slide: function( event, ui ) {
-        $( "#amount" ).val( "NZD" + ui.values[ 0 ] + " - NZD" + ui.values[ 1 ] );
-      }
-    });
-    $( "#amount" ).val( "NZD" + $( "#slider-range" ).slider( "values", 0 ) +
-      " - NZD" + $( "#slider-range" ).slider( "values", 1 ) );
+    $('.nstSlider').nstSlider({
+    "left_grip_selector": ".leftGrip",
+    "right_grip_selector": ".rightGrip",
+    "value_bar_selector": ".bar",
+    "value_changed_callback": function(cause, leftValue, rightValue) {
+        $(this).parent().find('.leftLabel').text(leftValue);
+        $(this).parent().find('.rightLabel').text(rightValue);
+        $("#price_min").val(leftValue);
+        $("#price_max").val(rightValue);
+    }
+});
   });
 </script>
 
@@ -253,6 +289,7 @@ $(document).ready(function() {
                         '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
+
 
                     }
                   })(marker1, i)); 
@@ -499,7 +536,7 @@ var marke0 ;
                     $('#list-table').html("");
                     clearOverlays();
                     if(data.length <= 0){
-                      $('#list-table').html("<tr><td></td><td>No house to show</td><td></td></tr>");
+                      $('#list-table').html("<tr><td></td><td></td><td>No house to show</td><td></td></tr>");
                     }
                     for(i=0 ; i<data.length;i++){
                             console.log(data[i].homes);

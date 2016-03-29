@@ -2,7 +2,7 @@
 @import "bootstrap";
 @import "home";
 @import "signuplogin";
-
+@import "jquery.nstSlider.min";
 @import "alertify";
 @import "alertify.default";
 
@@ -11,9 +11,6 @@
 @import "alertify.core";
 @import "show";
 
-/*
- *= require jquery-ui
- */
 
 #simple-bar{
 			background-color: #333;

@@ -57,9 +57,13 @@ class PhotosController < ApplicationController
   def destroy
     @photo.destroy
     respond_to do |format|
-      format.html { redirect_to photos_url, notice: 'Photo was successfully destroyed.' }
+      format.html { redirect_to admin_path, notice: 'Photo was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def homephoto
+    @photo = Photo.all.where(home_id: params[:id])
   end
 
   private

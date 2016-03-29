@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'near_homes' => 'homes#show_near_by_homes', :as=> ""
   #get 'home/index'
   get 'filter_homes' => 'homes#show_filter', :as=> ""
+  get 'home/photos/:id' => 'photos#homephoto', :as=> ""
   get 'admin' => 'admin#index', :as=> "admin"
 
   # The priority is based upon order of creation: first created -> highest priority.

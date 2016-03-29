@@ -83,10 +83,10 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  username: wrmpaihupuumsc
-  password: PGthQYn0gF2T2LP-kuV6CUe2Xy
-  hostname: ec2-54-83-0-187.compute-1.amazonaws.com
+  username: mkhutjedgcmmwv
+  password: 9AYDGm8yoOqcVlsJb30lTW98Ok
+  hostname: ec2-54-204-25-54.compute-1.amazonaws.com
   pool: 5
   port: 5432
-  url: postgres://wrmpaihupuumsc:PGthQYn0gF2T2LP-kuV6CUe2Xy@ec2-54-83-0-187.compute-1.amazonaws.com:5432/dc0k9s0tr08m80
-  database: dc0k9s0tr08m80
+  url: postgres://mkhutjedgcmmwv:9AYDGm8yoOqcVlsJb30lTW98Ok@ec2-54-204-25-54.compute-1.amazonaws.com:5432/d448djovurbu5k
+  database: d448djovurbu5k

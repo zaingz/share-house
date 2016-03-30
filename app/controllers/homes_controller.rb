@@ -21,8 +21,10 @@ class HomesController < ApplicationController
     @home = Home.find(params[:id])
     respond_to do |format|
       if @home.update(home_params)
+        if params[:photo]
          params[:photo]['image'].each do |a|
           @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
+        end
        end
         format.html { redirect_to @home, notice: 'Home was successfully updated.' }
         format.json { render :index, status: :updated, location: @home }
@@ -38,6 +40,7 @@ class HomesController < ApplicationController
 		@homes.user_id = current_user.id
 		respond_to do |format|
       if @homes.save
+
           params[:photo]['image'].each do |a|
           @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
        end

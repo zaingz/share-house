@@ -113,7 +113,12 @@
                   </div>
                   <div class="form-group">
                     <div class="form-control">
-                      <%= f.file_field :image %>
+                                            <%= f.fields_for :photo do |p| %>
+     <div class="field">
+       <%= p.label "Images (Maximum 4)" %><br>
+       <%= p.file_field :photo, :multiple => true, name: "photo[image][]", style: "margin-top:20px;" %>
+     </div>
+   <% end %>
                     </div>
                   </div>  
                   <div class="form-group">

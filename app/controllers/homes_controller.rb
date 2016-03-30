@@ -39,17 +39,22 @@ class HomesController < ApplicationController
 		@homes = Home.new(home_params)
 		@homes.user_id = current_user.id
 		respond_to do |format|
-      if @homes.save
-
+      if params[:photo]
+        if @homes.save
           params[:photo]['image'].each do |a|
-          @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
-       end
-        format.html { redirect_to @homes, notice: 'Home was successfully created.' }
-        format.json { render :index, status: :created, location: @homes }
+            @photo = @homes.photos.create!(:image => a, :home_id => @homes.id)
+          end
+          format.html { redirect_to @homes, notice: 'Home was successfully created.' }
+          format.json { render :index, status: :created, location: @homes }
+        else
+          format.html { render :new }
+          format.json { render json: @homes.errors, status: :unprocessable_entity }   
+        end
       else
-        format.html { render :new }
-        format.json { render json: @homes.errors, status: :unprocessable_entity }   
+        format.html { render :new  }
+        format.json { render json: @homes.errors, status: :unprocessable_entity } 
       end
+
     end
 	end
 

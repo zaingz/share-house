@@ -11,7 +11,7 @@ include ActiveModel::Serialization
 
 
 
-	validates_length_of :photos, maximum: 4
+	validates_length_of :photos, maximum: 4 
 	validates_presence_of :rate
 	validates :rate, :numericality => { :greater_than_or_equal_to => 0 }
 	geocoded_by :address,

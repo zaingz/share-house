@@ -59,7 +59,7 @@
         </div>
         <div  class="form-group">
           <label>Price:</label>
-          <div class="nstSlider" data-range_min="0" data-range_max="10000" data-cur_min="<%= @min_price_home %>"    data-cur_max="<%= @max_price_home %>">
+          <div class="nstSlider" data-range_min="<%= @min_price_home %>" data-range_max="<%= @max_price_home %>" data-cur_min="<%= @min_price_home %>"    data-cur_max="<%= @max_price_home %>">
 
             <div class="bar"></div>
             <div class="leftGrip" ></div>
@@ -126,7 +126,8 @@
           </div>
         </div>
       </form>
-      <button type="button" class="btn btn-success" style="padding-top: 5px;padding-bottom: 5px;margin-bottom: 10px;width: 100%" id="submitfilter">Filter</button>
+      <button type="button" class="btn btn-success" style="padding-top: 5px;padding-bottom: 5px;margin-bottom: 10px;width: 47%" id="submitfilter">Filter</button>
+      <button type="button" class="btn btn-danger" style="padding-top: 5px;padding-bottom: 5px;margin-bottom: 10px;width: 47%" id="resetfilter">Reset</button>
     </div>
     <div id='list' class="col-md-4">
       <table class="table table-striped" >
@@ -139,11 +140,22 @@
           </tr>
         </thead>
         <tbody id="list-table">
+        <% if @homes.count < 1 %>
+          <tr><td></td><td></td><td>No house to show</td><td></td></tr>
+        <% end %>
+
           <% for home in @homes %>
 
          
             <tr id="list<%= home.id %>" value="<%= home.lat %> <%= home.long %>">
-              <td> <a href="<%="/homes/#{home.id}"%>"><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%>  </a></td>
+              <td> 
+                <a href="<%="/homes/#{home.id}"%>">
+                <% if home.photos.exists? %>
+                <%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%>  </a>
+                <% else %>
+                  No image
+                <% end %>
+              </td>
               <td><%= home.address %></td>
               <td><%= home.description %></td>
               <td><%= home.rate %></td>
@@ -159,7 +171,33 @@
   </div>
 </div>
 
+<script type="text/javascript">
+  /*$(document).ready(function(){
+    for (var i = 0; i < 5; i++) {
+     $("#list"+i).hover(function(){
+        var latlong = $(this).attr("value");
+        var latilongi = latlong.split(" ");
+        var lat = latilongi[0];
+        var long = latilongi[1];
+        console.log("Latitude: " + lat);
+        console.log("Longitude: " + long);
 
+        var temp = new google.maps.LatLng(lat,long);
+        var mapi = new google.maps.Map(document.getElementById('map'), {
+          center: {lat:   -40.900557, lng: 174.885971},
+          zoom: 5  
+        });
+        var mak = new google.maps.Marker({
+                    position: temp,
+                    map: mapi
+                  });
+        console.log(mak);
+      }, function(){
+        
+      });
+    }
+  });*/
+</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -451,7 +489,10 @@ $(document).ready(function() {
           }
           var mc = new MarkerClusterer(map,markers);
             }*/
-          
+          $('#resetfilter').click(function(){
+            console.log('level');
+            location.reload();
+          });
 
             $('#submitfilter').click(function(){
               $('#myModal').modal('hide');

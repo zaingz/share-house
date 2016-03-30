@@ -11,9 +11,20 @@
       </tr>
     </thead>
     <tbody id="admin-table">
+        <% if @homes.count < 1 %>
+          <tr><td></td><td></td><td></td><td>No house to show</td><td></td><td></td><td></td></tr>
+        <% end %>
+        
     	<% for home in @homes %>
       <tr>
-        <td><a href="<%="/home/photos/#{home.id}"%>"><%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%></a></td>
+        <td>
+            <a href="<%="/home/photos/#{home.id}"%>">
+            <% if home.photos.exists? %>
+                <%= image_tag(home.photos.first.image_url(:thumbnail), :width => 50, :height => 50)%></a>
+            <% else %>
+                No image
+            <% end %>
+        </td>
         <td><%= home.address %></td>
         <td><%= home.rate %></td>
         <td><%= home.description %></td>

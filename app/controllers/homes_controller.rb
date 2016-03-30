@@ -4,7 +4,7 @@ class HomesController < ApplicationController
 
 	def index
 		respond_to do |format|
-      homes = Home.near([-40.900557,174.885971], 20)
+      homes = Home.all
       format.json { render json: homes.to_json() }
     end
 	end
@@ -62,7 +62,7 @@ class HomesController < ApplicationController
     @home = Home.find(params[:id])
     @home.destroy
   
-    redirect_to :admin
+    redirect_to :admin , notice: 'Home was successfully destroyed.'
   end
 
 	def show_near_by_homes		

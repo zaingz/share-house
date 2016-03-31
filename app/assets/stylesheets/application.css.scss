@@ -10,6 +10,7 @@
 
 @import "alertify.core";
 @import "show";
+@import "material-kit";
 
 
 #simple-bar{
@@ -23,6 +24,10 @@
 	margin-top: 9px;
 }
 
+body{
+	background-color: #CFD8DC;
+}
+
 #simple-bar{
 	ul{
 		.active{
@@ -34,6 +39,14 @@
 		}
 		
 	}
+}
+
+
+.shadowme{
+	box-shadow: 0 1px 3px 0 #707070, 0 1px 1px 0 #adadad;
+	background-color: white;
+    margin: 20px 0px; 
+    padding: 40px;
 }
 
 
@@ -65,3 +78,28 @@
 	    margin-bottom: 7px;
 	}
 }*/
+
+
+.navbar{
+	border-radius: 0px;
+	color: white;
+
+	box-shadow: 0 12px 12px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload .upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}

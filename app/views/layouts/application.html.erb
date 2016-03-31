@@ -28,24 +28,24 @@
 	<nav class="navbar navbar-default navbar-static-top" style="height: 60px; padding-top: 4px;">
 	  <div class="container" style="">
 	    <div class="navbar-header">
-	      <p class="navbar-brand" ><a href="/" style="color: #337ab7 ; text-decoration: none;"> Share House </a></p>
+	      <p class="navbar-brand" ><a href="/" style="color: white ; text-decoration: none;"> Share House </a></p>
 	    </div>
 
 	    <ul class="nav navbar-nav navbar-right">
 	    <% if user_signed_in?  and current_user.admin%>
 	      <li>		
 
-	      <button class="btn btn-default" type="button" id="post-pad" onclick="window.location.assign('<%= "/admin" %>');" style="margin-right: 5px;margin-top: 9px;"><span class=""></span>Admin</button></li>
+	      <button class="btn btn-primary" type="button" id="post-pad" onclick="window.location.assign('<%= "/admin" %>');" style="margin-right: 5px;margin-top: 9px;color: white;"><span class=""></span>Admin</button></li>
 	      <%end%>
 	        <li>			      
-	      <button class="btn btn-default" type="button" id="post-pad" onclick="window.location.assign('<%= new_home_path %>');" style="margin-right: 5px;margin-top: 9px;"><span class="glyphicon glyphicon-plus"></span>&nbspPost</button></li>
+	      <button class="btn btn-primary" type="button" id="post-pad" onclick="window.location.assign('<%= new_home_path %>');" style="margin-right: 5px;margin-top: 9px;color: white;"><span class="glyphicon glyphicon-plus"></span>&nbspPost</button></li>
 	      <li>
 	      
 	      <li>
 	      <% if user_signed_in? %>
-      	      <button class="btn btn-danger" id="logout-button" onclick="destroy()"><span class="glyphicon glyphicon-log-in"></span> Logout</button>
+      	      <button class="btn btn-primary" id="logout-button" onclick="destroy()" style="color: white;"><span class="glyphicon glyphicon-log-in" ></span> Logout</button>
 	      <% else %>
-	      <button class="btn btn-success" id="login-button" onclick="window.location.assign('<%= new_user_session_path %>');"><span class="glyphicon glyphicon-user"></span> Login</button>
+	      <button class="btn btn-primary" id="login-button" onclick="window.location.assign('<%= new_user_session_path %>');" style="color: white;"><span class="glyphicon glyphicon-user" ></span> Login</button>
 	      <% end %>
 	      </li>
 

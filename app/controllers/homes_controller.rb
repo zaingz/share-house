@@ -80,7 +80,7 @@ class HomesController < ApplicationController
   def show_filter
     p params["price_min"]..params["price_max"]
     respond_to do |format|
-      homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["locat"], params["min_days"],params["pets"],params["bond"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"], params["typ"])
+      homes = Home.search([(params["price_min"].to_i)..(params["price_max"].to_i)], params["locat"],params["pets"],params["internet"],params["tv"],params["laundry"], params["heater"], params["parking"],params["air"])
       format.json { render json: homes.map{|f| HomesSerializer.new(f)}.to_json }
     end
   end

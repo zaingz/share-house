@@ -5,7 +5,7 @@ class HomesController < ApplicationController
 	def index
 		respond_to do |format|
       homes = Home.all
-      format.json { render json: homes.to_json() }
+      format.json { render json: homes.map{|f| HomesSerializer.new(f)}.to_json }
     end
 	end
 

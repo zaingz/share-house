@@ -16,7 +16,7 @@
 <%= render "devise/shared/links" %> -->
 
 
-<div class="container">
+<!-- <div class="container">
       <div class="row flipeffect" style="margin-top:75px;">
       <div class="col-md-6 col-md-offset-3 ">
         <div class="panel panel-login signup-form-body">
@@ -57,3 +57,38 @@
       </div>
     </div>
   </div>
+ -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="shadowme ">
+            <h4 class="text-center nav nav-pills nav-pills-success">FORGOT YOUR PASSWORD?</h4>
+            <div class="row">
+              <div class="col-lg-12">
+                <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post },:id=>"forgetpassform") do |f| %>
+                <%= devise_error_messages! %>   
+                  <div class="form-group label-floating">
+                    <%= label(:email, "Email" , :class => "control-label") %>
+                    <%= f.email_field :email,:class=>"form-control",autofocus: true %>
+                  </div>
+                  <div class="form-group" style="margin: 0px;">
+                    <%= f.submit "Send me reset password instructions",:class=>"btn btn-raised btn-info full-width-button" %>
+                  </div>
+                  <div class="form-group" style="padding-top: 0px;margin: 0px;">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="text-center">
+                          <%= render "devise/shared/links" %>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>

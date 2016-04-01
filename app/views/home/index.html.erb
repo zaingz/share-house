@@ -134,7 +134,7 @@
     </div>
     <div id='list' class="col-md-4">
         <% if @homes.count < 1 %>
-          <div class="shadowme">No house to show</div>
+          <div class="shadowme" style="padding: 0; margin-top: -9px;height: 100px;"><h4 class="text-center" style="padding-top: 30px;">No house to show</h4></div>
         <% end %>
 
         <% for home in @homes %>
@@ -148,8 +148,8 @@
                 <% end %>
               </div>
               <div class="text col-md-6">
-                <h5><%= home.title %></h5>
-                <h5 class="text-muted" style="position: relative;top:-15px;font-size: 10px;"><%= home.address %></h5>
+                <h5><%= home.title.capitalize %></h5>
+                <h5 class="text-muted" style="position: relative;top:-15px;font-size: 10px;"><%= truncate(home.address, length: 50) %></h5>
 
                 <a class="btn btn-primary btn-sm" href="<%="/homes/#{home.id}"%>" style="position:relative;top: -25px;">View Details</a>
               </div>
@@ -299,8 +299,8 @@ $(document).ready(function() {
                 data = JSON.parse(JSON.stringify(data));
                 console.log(data);
                 for(i=0 ; i<data.length;i++){
-                  console.log(data[i]);
-                  position = new google.maps.LatLng(data[i].lat,data[i].long);
+                  console.log(data[i].homes);
+                  position = new google.maps.LatLng(data[i].homes.lat,data[i].homes.long);
                   //img_sel = new google.maps.MarkerImage('images/p.png');
                   marker1 = new google.maps.Marker({
                     position: position,
@@ -313,17 +313,19 @@ $(document).ready(function() {
                   infowindow = new google.maps.InfoWindow({
                     maxWidth: 350
                   });
+                  title = data[i].homes.title.charAt(0).toUpperCase() + data[i].homes.title.substring(1);
+
                 google.maps.event.addListener(marker1, 'click', (function(marker1, i) {
                     return function() {
                         var markerid = marker1.alt;
                         //var res1 = markerid.split(",");
                         var cs = '<div >' +
-                          '<h3><img src='+data[i].image+' width=50 height=50>  '+data[i].title+'</h3>' +
+                          '<h3><img src='+data[i].homes.image+' width=50 height=50>  '+title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].h_type.capitalize+'</div>' +
-                            '<p><strong>Address:</strong> '+data[i].address+
-                            '<br><strong>Phone:</strong> '+data[i].contact+'<br><strong>E-mail:</strong> '+data[i].email+'</p>'+
-                          '</div>' + '<div><a href="/homes/'+data[i].id+'" class="btn btn-default" role="button">Details</a></div>' +
+                            '' +
+                            '<p><strong>Address:</strong> '+data[i].homes.address+
+                            '<br><strong>Phone:</strong> '+data[i].homes.contact+'<br><strong>E-mail:</strong> '+data[i].homes.email+'</p>'+
+                          '</div>' + '<div><a href="/homes/'+data[i].homes.id+'" class="btn btn-default" role="button">Details</a></div>' +
                         '</div>';
                         infowindow.setContent(cs);
                         infowindow.open(map, marker1);
@@ -577,7 +579,7 @@ var marke0 ;
                     $('#list').html("");
                     clearOverlays();
                     if(data.length <= 0){
-                      $('#list-table').html('<div class="shadowme">No house to show</div>');
+                      $('#list').html('<div class="shadowme" style="padding: 0; margin-top: -9px; height: 100px;"><h4 class="text-center" style="padding-top: 30px;">No house to show</h4></div>');
                     }
                     for(i=0 ; i<data.length;i++){
                             console.log(data[i].homes);
@@ -593,14 +595,15 @@ var marke0 ;
                             });
                              markersArray.push(marke0);
                             infowindow = new google.maps.InfoWindow();
+                            title = data[i].homes.title.charAt(0).toUpperCase() + data[i].homes.title.substring(1);
                 google.maps.event.addListener(marke0, 'click', (function(marker1, i) {
                     return function() {
                         var markerid = marke0.alt;
                         //var res1 = markerid.split(",");
                         var cs =  '<div >' +
-                          '<h3><img src='+data[i].homes.image+' width=50 height=50>  '+data[i].homes.title+'</h3>' +
+                          '<h3><img src='+data[i].homes.image+' width=50 height=50>  '+title+'</h3>' +
                           '<div >' +
-                            '<div ><strong>Type:</strong> '+data[i].homes.h_type+'</div>' +
+                            '' +
                             '<p><strong>Address:</strong> '+data[i].homes.address+
                             '<br><strong>Phone:</strong> '+data[i].homes.contact+'<br><strong>E-mail:</strong> '+data[i].homes.email+'</p>'+
                           '</div>' + '<div><a href="/homes/'+data[i].homes.id+'" class="btn btn-default" role="button">Details</a></div>' +
@@ -609,8 +612,12 @@ var marke0 ;
                         infowindow.open(map, marke0);
                     }
                   })(marke0, i)); 
+                var addre = data[i].homes.address;
+                if(data[i].homes.address.length > 50) {
+                    addre = data[i].homes.address.substring(0,47)+"...";
+                }
 
-                rowdata = '';
+                rowdata = '<div class="rowItem col-md-12 shadowme" style="padding: 0; margin-top: 2px;margin-bottom: 10px; height: 100px;"><div class="img col-md-4" style="padding: 0;"><img  style="width: 100%; height: 100px;" src=" ' + data[i].homes.image + '" /></div><div class="text col-md-6"><h5>' + title+ '</h5><h5 class="text-muted" style="position: relative;top:-15px;font-size: 10px;"> ' + addre + '</h5><a class="btn btn-primary btn-sm" href="/homes/'+ data[i].homes.id +'" style="position:relative;top: -25px;">View Details</a></div><div class="col-md-2"><p style="margin-top: 75%"><span class="glyphicon glyphicon-usd">' + data[i].homes.rate +'</span></p></div></div>';
                       $('#list').append(rowdata);
 
                           }

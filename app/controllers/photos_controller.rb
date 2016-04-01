@@ -55,10 +55,17 @@ class PhotosController < ApplicationController
   # DELETE /photos/1
   # DELETE /photos/1.json
   def destroy
-    @photo.destroy
-    respond_to do |format|
-      format.html { redirect_to admin_path, notice: 'Photo was successfully destroyed.' }
-      format.json { head :no_content }
+    if @photo.home.photos.count > 1
+      @photo.destroy
+      respond_to do |format|
+        format.html { redirect_to admin_path, notice: 'Photo was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to admin_path, notice: 'Cant destroy a photo.' }
+        format.json { head :no_content }
+      end
     end
   end
 

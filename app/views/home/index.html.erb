@@ -6,7 +6,11 @@
     padding: 0;
   }
   #map {
-    height: 690px;
+    height: 710px;
+  }
+  #list{
+    height: 710px;
+    overflow: auto;
   }
   .controls {
     background-color: #fff;
@@ -44,8 +48,9 @@
     <div class="col-md-3 shadowme" style="margin: 0px;padding-top: 0px;">
       <form role="form">
 
-        <div class="form-group">
-          <label class="label-floating">Location</label>
+        <div class="form-group" style="padding: 10px;border-radius: 1px;">
+          <label class="label-floating" style="color: black;">Location</label>
+          <span class="glyphicon glyphicon-search" style="float: right;"></span>
           <input type="text"  id="search-input" class="form-control" placeholder="">
         </div>
 

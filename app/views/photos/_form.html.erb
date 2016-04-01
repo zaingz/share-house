@@ -11,15 +11,15 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field hidden">
     <%= f.label :home_id %><br>
     <%= f.number_field :home_id %>
   </div>
   <div class="field">
-    <%= f.label :image %><br>
-    <%= f.text_field :image %>
+    <%= f.file_field :image %>
   </div>
-  <div class="actions">
+            
+  <div class="actions" style="margin-top: 15px;">
     <%= f.submit %>
   </div>
 <% end %>

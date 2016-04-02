@@ -51,7 +51,8 @@ class HomesController < ApplicationController
           format.json { render json: @homes.errors, status: :unprocessable_entity }   
         end
       else
-        format.html { render :new  }
+        flash[:error] = "Photos can't be blank!"
+        format.html { render :new}
         format.json { render json: @homes.errors, status: :unprocessable_entity } 
       end
 
